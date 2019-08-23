@@ -1,74 +1,355 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@{
+    JObject user = null;
+    var cookie = ViewContext.HttpContext.Request.Cookies["user"];
+    if (cookie != null)
+    {
+        user = JsonConvert.DeserializeObject<JObject>(HttpUtility.UrlDecode(cookie));
+    }
+
+    var photo = user?["Photo"];
+    var imageFullPath = user?["ImageFullPath"];
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LabTest.Web</title>
+    <title>@ViewData["Title"] - LabTest.com</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    @*<environment include="Development">
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+        </environment>
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>*@
+
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+
+
+    @*<script src="~/Scripts/modernizr-2.8.3.js"></script>*@
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/jquery-ui-1.12.1.js"></script>
+
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/lib/Admin_theme/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/lib/Admin_theme/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/lib/Admin_theme/vendors/css/vendor.bundle.addons.css">
+    <link rel="stylesheet" href="~/lib/Admin_theme/css/custom-style.css" type="text/css" />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/lib/Admin_theme/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/lib/Admin_theme/images/favicon.png" />
+
+    <!--Font-Awesome-->
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--Font-Awesome-->
+    @RenderSection("Head", required: false)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">LabTest.Web</a>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                @*Change for clicking home*@
+                <a class="navbar-brand brand-logo-mini" href="~/Home/Index">
+                    <img src="~/lib/Admin_theme/images/Lab-Ai.png" alt="logo" />
+                </a>
+                <a class="navbar-brand brand-logo" href="#">
+                    <img src="~/lib/Admin_theme/images/Lab-Ai.png" alt="logo" />
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Schedule
+                            <span class="badge badge-primary ml-1">New</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link">
+                            <i class="mdi mdi-elevation-rise"></i>Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="mdi mdi-bookmark-plus-outline"></i>Score
+                        </a>
+                    </li>
                 </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-file-document-box"></i>
+                            <span class="count">7</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                            <div class="dropdown-item">
+                                <p class="mb-0 font-weight-normal float-left">
+                                    You have 7 unread mails
+                                </p>
+                                <span class="badge badge-info badge-pill float-right">View all</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="~/lib/Admin_theme/images/faces/face4.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-medium text-dark">
+                                        David Grey
+                                        <span class="float-right font-weight-light small-text">1 Minutes ago</span>
+                                    </h6>
+                                    <p class="font-weight-light small-text">
+                                        The meeting is cancelled
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="~/lib/Admin_theme/images/faces/face2.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-medium text-dark">
+                                        Tim Cook
+                                        <span class="float-right font-weight-light small-text">15 Minutes ago</span>
+                                    </h6>
+                                    <p class="font-weight-light small-text">
+                                        New product launch
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="~/lib/Admin_theme/images/faces/face3.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-medium text-dark">
+                                        Johnson
+                                        <span class="float-right font-weight-light small-text">18 Minutes ago</span>
+                                    </h6>
+                                    <p class="font-weight-light small-text">
+                                        Upcoming board meeting
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="mdi mdi-bell"></i>
+                            <span class="count">4</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <a class="dropdown-item">
+                                <p class="mb-0 font-weight-normal float-left">
+                                    You have 4 new notifications
+                                </p>
+                                <span class="badge badge-pill badge-warning float-right">View all</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="mdi mdi-alert-circle-outline mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium text-dark">Application Error</h6>
+                                    <p class="font-weight-light small-text">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="mdi mdi-comment-text-outline mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium text-dark">Settings</h6>
+                                    <p class="font-weight-light small-text">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="mdi mdi-email-outline mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium text-dark">New user registration</h6>
+                                    <p class="font-weight-light small-text">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown d-none d-xl-inline-block">
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <span class="profile-text">@(user?["FullName"])</span>
+                            @{
+                                var userId = (user?["UserId"]);
+                            }
+                            @if (photo != null)
+                            {
+                                <img class="img-xs rounded-circle" style="height: 50px" src="@imageFullPath" alt="Profile image">
+                            }
+                            else
+                            {
+                                <img style="height: 50px" src="~/lib/Admin_theme/images/faces/face0.png" />
+                            }
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                            <a class="dropdown-item p-0">
+                                <div class="d-flex border-bottom">
+                                    <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                                        <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+                                    </div>
+                                    <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+                                        <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+                                    </div>
+                                    <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                                        <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
+                                    </div>
+                                </div>
+                            </a>                          
+                            <form id="frmLogout" method="post" asp-controller="Home" asp-action="Logout"></form>
+                            <a class="dropdown-item" href="javascript: jQuery('#frmLogout').submit()">
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
             </div>
+        </nav>
+        <!-- partial -->
+
+
+
+
+
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            <div class="user-wrapper">
+                                <div class="profile-image">
+                                    @if (photo != null)
+                                    {
+                                        <img src="@imageFullPath" alt="profile image">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/lib/Admin_theme/images/faces/face0.png" />
+                                    }
+
+                                </div>
+                                <div class="text-wrapper">
+                                    <p class="profile-name">@(user?["FullName"])</p>
+                                    <div>
+                                        <small class="designation text-muted">@(user?["UserType"])</small>
+                                        <span class="status-indicator online"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<button class="btn btn-success btn-block">
+                                    New Project
+                                    <i class="mdi mdi-plus"></i>
+                                </button>*@
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="menu-icon mdi mdi-television"></i>
+                            <span class="menu-title"><strong>Dashboard</strong></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Registration/Index">
+                            <i class="menu-icon mdi mdi-television"></i>
+                            <span class="menu-title"><strong>Registration</strong></span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/SupplierInfo/Index">
+                            <i class="menu-icon mdi mdi-television"></i>
+                            <span class="menu-title"><strong>Task</strong></span>
+                        </a>
+                    </li>
+              
+                </ul>
+            </nav>
+            <!-- partial -->
+
+            <div class="main-panel">
+                <div class="shared_layout">
+                    <div class="content-wrapper">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+                            Copyright © 2019
+                            <a href="" target="_blank"> LabTest.</a>. All rights reserved.
+                        </span>
+
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
         </div>
-    </nav>
-
-    <partial name="_CookieConsentPartial" />
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - LabTest.Web</p>
-        </footer>
+        <!-- page-body-wrapper ends -->
     </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
+    <!-- plugins:js -->
+    <script src="~/lib/Admin_theme/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/lib/Admin_theme/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/lib/Admin_theme/js/off-canvas.js"></script>
+    <script src="~/lib/Admin_theme/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/lib/Admin_theme/js/dashboard.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

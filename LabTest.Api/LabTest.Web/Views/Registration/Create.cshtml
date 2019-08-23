@@ -1,0 +1,55 @@
+﻿@model LabTest.Web.Models.RegistrationModelView
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col-md-8 col-md-offset-2">
+    <div class="form-horizontal">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Add Registration Information
+            </div>
+
+            <div class="panel-body">
+                <br />
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label col-md-3"></label>
+                        <input asp-for="FirstName" class="form-control col-md-5" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label col-md-3"></label>
+                        <input asp-for="LastName" class="form-control col-md-5" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label col-md-3"></label>
+                        <input asp-for="Email" class="form-control col-md-5" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MobileNumber" class="control-label col-md-3"></label>
+                        <input asp-for="MobileNumber" class="form-control col-md-5" />
+                        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label col-md-3"></label>
+                        <input asp-for="Address" class="form-control col-md-5" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-10">                       
+                            <button type="submit" id="save"  class="btn btn-primary">Save</button>
+                            <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;&nbsp;Back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+       

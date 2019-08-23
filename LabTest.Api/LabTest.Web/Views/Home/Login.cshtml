@@ -1,0 +1,73 @@
+﻿@model LabTest.Web.Models.UserCredentialViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <title>Login | Hateemtai.com</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="~/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/style_responsive.css" rel="stylesheet" />
+    <link href="~/css/style_default.css" rel="stylesheet" id="style_color" />
+
+    <style>
+        .login-header {
+            -moz-background: linear-gradient(120deg, #00e4d0, #5983e8);
+            -webkit-background: linear-gradient(120deg, #00e4d0, #5983e8);
+            background: linear-gradient(120deg, #00e4d0, #5983e8);
+        }
+
+            .login-header #logo {
+                width: 170px;
+                max-width: 170px;
+            }
+
+            .login-header .logo img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+    </style>
+</head>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Token" class="control-label"></label>
+                <input asp-for="Token" class="form-control" />
+                <span asp-validation-for="Token" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/jquery.blockui.js"></script>
+<script src="~/js/scripts.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        App.initLogin();
+    });
+</script>
+

@@ -55,7 +55,7 @@ namespace LabTest.Api
             //Enable cross-origin requests 
             services.AddCors(options =>
             {
-                options.AddPolicy("Admin", builder => { builder.WithOrigins("https://localhost:44363").AllowAnyHeader().AllowAnyMethod(); });
+                options.AddPolicy("Admin", builder => { builder.WithOrigins("https://localhost:44363", "https://localhost:44376").AllowAnyHeader().AllowAnyMethod(); });
             });
             services.AddDbContext<LabTestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

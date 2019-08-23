@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LabTest.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LabTest.Web.Controllers
 {
@@ -19,6 +20,12 @@ namespace LabTest.Web.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
             return View();
         }
 
