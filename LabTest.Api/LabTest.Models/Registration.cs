@@ -18,5 +18,8 @@ namespace LabTest.Models
         public string Address { get; set; }
         public int CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
+
+        [NotMapped]
+        public string FirstLastName => (FirstName + " " + LastName).Trim();
     }
 }

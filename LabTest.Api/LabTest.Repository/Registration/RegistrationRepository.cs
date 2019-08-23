@@ -40,6 +40,11 @@ namespace LabTest.Repository.Registration
             return registration.Id;
         }
 
+        public async Task<Models.Registration> GetByEmailAysnc(string Email)
+        {
+            return await _dbContext.Registrations.FirstOrDefaultAsync(t => t.Email == Email);
+        }
+
         private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {

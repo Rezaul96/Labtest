@@ -50,11 +50,22 @@ namespace LabTest.Api
                 options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //Enable cross-origin requests 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Admin", builder => { builder.WithOrigins("https://localhost:44363").AllowAnyHeader().AllowAnyMethod(); });
+            });
             services.AddDbContext<LabTestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+              .AddEntityFrameworkStores<LabTestDbContext>()
+              .AddDefaultTokenProviders();
 
             services.AddReposotories();
 
+            
             //services.AddApiVersioning(options =>
             //{
             //    options.AssumeDefaultVersionWhenUnspecified = true;
@@ -93,16 +104,36 @@ namespace LabTest.Api
             app.UseAuthentication();
 
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
+            //Identity database init
+            //var serviceProvider = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider;
+            //var context = serviceProvider.GetRequiredService<AppDBContext>();
+            //var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            //context.Database.EnsureCreated();
+            //var result = context.Users;
+            //if (!context.Users.Any())
+            //{
+            //    var user = new ApplicationUser
+            //    {
+            //        Email = "admin@hateemtai.com",
+            //        UserName = "admin@hateemtai.com",
+            //        PhoneNumber = "01712443308",
+            //        SecurityStamp = Guid.NewGuid().ToString()
+            //    };
+            //    userManager.CreateAsync(user, "@bC123dd");
+            //}
+
+
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseHsts();
+            //}
+
+            app.UseResponseCompression();          
             app.UseMvc();
         }
     }
