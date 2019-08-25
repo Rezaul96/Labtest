@@ -82,13 +82,7 @@ namespace LabTest.Web
                 });
 
             services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
-
-
-
-            //services.AddMvc().AddRazorPagesOptions(options => {
-            //    options.Conventions.AddAreaPageRoute("Identity", "/Home/Login", "");
-            //}).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+          
             services.AddMvc(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -96,7 +90,7 @@ namespace LabTest.Web
                     .RequireRole("User")
                     .Build();
 
-                //options.Filters.Add(new HateemtaiAuthorizationFilter(policy));
+               
 
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -129,28 +123,14 @@ namespace LabTest.Web
 
             app.UseAuthentication();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
-            //app.UseStatusCodePages(context =>
-            //{
-            //    if (context.HttpContext.Response.StatusCode == 404)
-            //    {
-            //        context.HttpContext.Response.Redirect("/Home/Login");
-            //    }
-
-            //    return Task.CompletedTask;
-            //});
+            app.UseCookiePolicy();         
 
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Login}/{id?}");
-                //routes.MapRoute(
-                //  name: "accountlogin",
-                //  template: "Identity",
-                //defaults: new { controller = "Home", action = "Login" });
+                    template: "{controller=Home}/{action=Login}/{id?}");                
             });
         }
     }

@@ -41,8 +41,23 @@
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-3 col-md-10">                       
-                            <button type="submit" id="save"  class="btn btn-primary">Save</button>
+                        <label asp-for="Password" class="control-label col-md-3"></label>
+                        <input asp-for="Password" class="form-control col-md-5" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReTypePasseord" class="control-label col-md-3"></label>
+                        <input asp-for="ReTypePasseord" class="form-control col-md-5" type="password" />
+                        <span asp-validation-for="ReTypePasseord" class="text-danger"></span>
+                       
+                    </div>
+                    <div class="form-group" style="margin-left: 247px;">
+                        <p style="color:red">should be minimum 8 digit like this Reza@123</p>
+                        <p style="color:red" id="validate-status" ></p>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-10">
+                            <button type="submit" id="save" class="btn btn-primary">Save</button>
                             <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;&nbsp;Back</a>
                         </div>
                     </div>
@@ -52,4 +67,24 @@
 
     </div>
 </div>
-       
+<script>
+    $(document).ready(function () {
+        $("#ReTypePasseord").keyup(validate);
+    });
+
+    function validate() {
+        var password1 = $("#Password").val();
+        var password2 = $("#ReTypePasseord").val();
+     
+
+        if (password1 == password2) {
+            $("#save").prop("disabled", false);         
+            $("#validate-status").text("");
+        }
+        else {   
+            $("#save").prop("disabled", true);
+            $("#validate-status").text("The password and confirmation password do not match.");
+        }
+
+    }
+</script>

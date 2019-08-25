@@ -1,0 +1,72 @@
+﻿@model LabTest.Web.Models.TaskModelView
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="col-md-8 col-md-offset-2">
+    <div class="form-horizontal">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Edit Task Information
+            </div>
+
+            <div class="panel-body">
+                <br />
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        @*<label asp-for="TaskId" class="control-label col-md-3"></label>*@
+                        <input type="hidden" asp-for="TaskId" class="form-control col-md-5" />
+                        <span asp-validation-for="TaskId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TaskName" class="control-label col-md-3"></label>
+                        <input asp-for="TaskName" class="form-control col-md-5" />
+                        <span asp-validation-for="TaskName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label col-md-3"></label>
+                        <input asp-for="Description" class="form-control col-md-5" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label col-md-3"></label>
+                        <input asp-for="StartDate" class="form-control col-md-5" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label col-md-3"></label>
+                        <input asp-for="EndDate" class="form-control col-md-5" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AssainedTo" class="control-label col-md-3"></label>
+                        <select asp-for="AssainedTo"
+                                class="form-control col-md-5"
+                                asp-items="@(new SelectList(@ViewBag.users,"Id", "FirstLastName"))"></select>
+                        <span asp-validation-for="AssainedTo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @*<label asp-for="AsaainTo" class="control-label col-md-3"></label>*@
+                        <input type="hidden" asp-for="AsaainTo" class="form-control col-md-5" />
+                        <span asp-validation-for="AsaainTo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @*<label asp-for="CreateDate" class="control-label col-md-3"></label>*@
+                        <input type="hidden" asp-for="CreateDate" class="form-control col-md-5" />
+                        <span asp-validation-for="CreateDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-10">
+                            <button type="submit" id="save" class="btn btn-primary">Edit</button>
+                            <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;&nbsp;Back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+

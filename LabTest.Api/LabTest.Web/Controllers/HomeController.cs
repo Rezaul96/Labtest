@@ -15,11 +15,19 @@ using System.Web;
 
 namespace LabTest.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            int userId = currentUser.Id;
+            var response = await AdminHttpClient.GetAsync(WebConfiguration.Instance.WebApiConfig, $"api/Task?assainedId={userId}", Request);
+            if (response.IsSuccessStatusCode)
+            {
+                var list = await response.Content.ReadAsAsync<List<TaskModelView>>() ?? new List<TaskModelView>();
+                return View(list);
+            }
+            return View(new List<TaskModelView>());
+           
         }
 
         public IActionResult About()
@@ -65,19 +73,16 @@ namespace LabTest.Web.Controllers
             var val = credential.Token;
             Response.Cookies.Append(ConfigKeys.AuthCookieKey, val, cookieOptions);
 
-            var model = await AdminHttpClient.GetAsync<RegistrationModelView>(WebConfiguration.Instance.WebApiConfig, $"api/Users/{userCredentialViewModel.UserName}/token", credential.Token);
+            var model = await AdminHttpClient.GetAsync<RegistrationModelView>(WebConfiguration.Instance.WebApiConfig, $"api/Registration/{userCredentialViewModel.UserName}/token", credential.Token);
             if (model != null)
             {
                 val = HttpUtility.UrlEncode(JsonConvert.SerializeObject(
                     new
                     {
                         FullName = model.FirstLastName,
-                        model.Email,
-                        //model.Phone,
-                        //model.Photo,
-                        //UserType = model.UserType.Name,
-                        model.Id
-                       //model.ImageFullPath
+                        model.Email,                      
+                        model.Id,
+                        model.MobileNumber
                     }, Formatting.None));
 
                 Response.Cookies.Append(ConfigKeys.UserCookieKey, val, cookieOptions);
@@ -98,6 +103,25 @@ namespace LabTest.Web.Controllers
             return View();
         }
 
-     
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                await AdminHttpClient.PostAsync(WebConfiguration.Instance.WebApiConfig, "/api/Auth/Logout", (object)null, Request);
+
+                Response.Cookies.Delete("Auth");
+                Response.Cookies.Delete("user");
+
+                return RedirectToAction("Login");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
+        }
+
+
     }
 }

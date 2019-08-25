@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LabTest.Repository.Core;
 using LabTest.Repository.Registration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabTest.Api.Controllers
@@ -13,9 +15,11 @@ namespace LabTest.Api.Controllers
     public class RegistrationController : Controller
     {
         private readonly IRegistrationRepository _registrationRepository;
-        public RegistrationController(IRegistrationRepository registrationRepository)
+        public readonly UserManager<ApplicationUser> _userManager;
+        public RegistrationController(IRegistrationRepository registrationRepository, UserManager<ApplicationUser> userManager)
         {
             _registrationRepository = registrationRepository;
+            _userManager = userManager;
         }
 
         // GET: api/Registration
@@ -64,7 +68,16 @@ namespace LabTest.Api.Controllers
                 if (registration == null)
                     return BadRequest();
                 if (registration.Id == 0)
-                {                   
+                {
+                    var appUser = new ApplicationUser
+                    {
+                        Email = registration.Email,
+                        UserName = registration.Email,
+                        PhoneNumber = registration.MobileNumber,
+                        SecurityStamp = Guid.NewGuid().ToString()
+                    };
+
+                    var res = await _userManager.CreateAsync(appUser, registration.Password);
 
                     var result = await _registrationRepository.Insert(registration);
                     if (result != null)
@@ -89,6 +102,22 @@ namespace LabTest.Api.Controllers
 
 
 
+        }
+
+        [HttpGet("{username}/{Token}")]
+        public async Task<IActionResult> GetUserByName([FromRoute] string username, [FromRoute] string Token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var users = await _registrationRepository.GetByEmailAysnc(username);
+            if (users == null)
+            {
+                return NotFound();
+            }         
+            return Ok(users);
         }
 
     }

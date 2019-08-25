@@ -14,5 +14,6 @@ namespace LabTest.Repository.Core
 
         }
         public DbSet<Models.Registration> Registrations { get; set; }
+        public DbSet<Models.Task> Tasks { get; set; }
     }
 }

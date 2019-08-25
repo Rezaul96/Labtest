@@ -8,6 +8,7 @@ using LabTest.Api.Helpers;
 using LabTest.Models;
 using LabTest.Repository.Core;
 using LabTest.Repository.Registration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +23,15 @@ namespace LabTest.Api.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;    
         private readonly IConfiguration _configuration;
-        private readonly IRegistrationRepository _registrationRepository;     
+        private readonly IRegistrationRepository _registrationRepository;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AuthController(UserManager<ApplicationUser> userManager, IConfiguration configuration,   IRegistrationRepository registrationRepository)
+        public AuthController(UserManager<ApplicationUser> userManager, IConfiguration configuration,   IRegistrationRepository registrationRepository, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _configuration = configuration;       
             _registrationRepository = registrationRepository;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
@@ -74,6 +77,15 @@ namespace LabTest.Api.Controllers
                 me = new { user.Email, user.PhoneNumber, user.UserName, login.Id, login.FirstLastName }
 
             });
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok();
         }
     }
 }

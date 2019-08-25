@@ -7,10 +7,7 @@
     if (cookie != null)
     {
         user = JsonConvert.DeserializeObject<JObject>(HttpUtility.UrlDecode(cookie));
-    }
-
-    var photo = user?["Photo"];
-    var imageFullPath = user?["ImageFullPath"];
+    }  
 }
 <!DOCTYPE html>
 <html>
@@ -71,7 +68,7 @@
                 <a class="navbar-brand brand-logo-mini" href="~/Home/Index">
                     <img src="~/lib/Admin_theme/images/Lab-Ai.png" alt="logo" />
                 </a>
-                <a class="navbar-brand brand-logo" href="#">
+                <a class="navbar-brand brand-logo" href="~/Home/Index">
                     <img src="~/lib/Admin_theme/images/Lab-Ai.png" alt="logo" />
                 </a>
             </div>
@@ -213,17 +210,8 @@
                     <li class="nav-item dropdown d-none d-xl-inline-block">
                         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <span class="profile-text">@(user?["FullName"])</span>
-                            @{
-                                var userId = (user?["UserId"]);
-                            }
-                            @if (photo != null)
-                            {
-                                <img class="img-xs rounded-circle" style="height: 50px" src="@imageFullPath" alt="Profile image">
-                            }
-                            else
-                            {
-                                <img style="height: 50px" src="~/lib/Admin_theme/images/faces/face0.png" />
-                            }
+                          
+                        <img style="height: 50px" src="~/lib/Admin_theme/images/faces/face0.png" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <a class="dropdown-item p-0">
@@ -265,32 +253,16 @@
                         <div class="nav-link">
                             <div class="user-wrapper">
                                 <div class="profile-image">
-                                    @if (photo != null)
-                                    {
-                                        <img src="@imageFullPath" alt="profile image">
-                                    }
-                                    else
-                                    {
-                                        <img src="~/lib/Admin_theme/images/faces/face0.png" />
-                                    }
-
+                                    <img src="~/lib/Admin_theme/images/faces/face0.png" />
                                 </div>
                                 <div class="text-wrapper">
-                                    <p class="profile-name">@(user?["FullName"])</p>
-                                    <div>
-                                        <small class="designation text-muted">@(user?["UserType"])</small>
-                                        <span class="status-indicator online"></span>
-                                    </div>
+                                    <p class="profile-name">@(user?["FullName"])</p>                                   
                                 </div>
-                            </div>
-                            @*<button class="btn btn-success btn-block">
-                                    New Project
-                                    <i class="mdi mdi-plus"></i>
-                                </button>*@
+                            </div>                          
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="~/Home/Index">
                             <i class="menu-icon mdi mdi-television"></i>
                             <span class="menu-title"><strong>Dashboard</strong></span>
                         </a>
@@ -304,7 +276,7 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="~/SupplierInfo/Index">
+                        <a class="nav-link" href="~/Task/Index">
                             <i class="menu-icon mdi mdi-television"></i>
                             <span class="menu-title"><strong>Task</strong></span>
                         </a>

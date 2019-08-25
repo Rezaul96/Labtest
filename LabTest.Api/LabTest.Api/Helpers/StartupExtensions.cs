@@ -1,4 +1,5 @@
 ﻿using LabTest.Repository.Registration;
+using LabTest.Repository.Task;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +33,8 @@ namespace LabTest.Api.Helpers
 
         public static IServiceCollection AddReposotories(this IServiceCollection services)
         {
-            return services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+            return services.AddScoped<IRegistrationRepository, RegistrationRepository>()
+                   .AddScoped<ITaskRepository, TaskRepository>();
               
         }
 

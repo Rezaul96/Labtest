@@ -21,5 +21,7 @@ namespace LabTest.Models
 
         [NotMapped]
         public string FirstLastName => (FirstName + " " + LastName).Trim();
+        [NotMapped]
+        public string Password { get; set; }
     }
 }

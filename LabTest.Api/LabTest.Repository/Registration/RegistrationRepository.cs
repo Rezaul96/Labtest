@@ -45,6 +45,8 @@ namespace LabTest.Repository.Registration
             return await _dbContext.Registrations.FirstOrDefaultAsync(t => t.Email == Email);
         }
 
+      
+
         private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {

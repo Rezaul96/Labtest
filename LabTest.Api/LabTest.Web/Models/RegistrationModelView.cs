@@ -12,7 +12,8 @@ namespace LabTest.Web.Models
         [Required,Display(Name ="First Name")]
         public string FirstName { get; set; }
         [Required, Display(Name = "Last Name")]
-        public string LastName { get; set; }     
+        public string LastName { get; set; }
+        [Required]
         public string Email { get; set; }
         [Required, Display(Name = "Mobile Number")]
         public string MobileNumber { get; set; }
@@ -21,5 +22,9 @@ namespace LabTest.Web.Models
         public int CreateBy { get; set; }
         public DateTime CreateDate { get; set; }      
         public string FirstLastName { get; set; }
+        [Required]
+        public string Password { get; set; }
+        [Required,Display(Name ="Confirm Password")]
+        public string ReTypePasseord { get; set; }
     }
 }

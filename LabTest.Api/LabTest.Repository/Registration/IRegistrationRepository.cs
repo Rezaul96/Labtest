@@ -12,5 +12,6 @@ namespace LabTest.Repository.Registration
         Task<int> Insert(Models.Registration registration);
         Task<int> Update(Models.Registration registration);
         Task<Models.Registration> GetByEmailAysnc(string Email);
+        
     }
 }

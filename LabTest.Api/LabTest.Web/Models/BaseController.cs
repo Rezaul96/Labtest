@@ -32,8 +32,7 @@ namespace LabTest.Web.Models
                     user = JsonConvert.DeserializeObject<JObject>(HttpUtility.UrlDecode(cookie));
                 }
                 usersModelView.Id = Convert.ToInt32(user?["Id"].ToString());
-                usersModelView.Email = user?["Email"].ToString();
-                usersModelView.MobileNumber = user?["MobileNumber"].ToString();
+                usersModelView.Email = user?["Email"].ToString();               
                 _currentUser = usersModelView;
                 return _currentUser;
 
