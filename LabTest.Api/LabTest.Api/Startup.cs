@@ -63,20 +63,14 @@ namespace LabTest.Api
               .AddEntityFrameworkStores<LabTestDbContext>()
               .AddDefaultTokenProviders();
 
-            services.AddReposotories();
-
-            
-            //services.AddApiVersioning(options =>
-            //{
-            //    options.AssumeDefaultVersionWhenUnspecified = true;
-            //    options.DefaultApiVersion = ApiVersion.Default;
-            //    options.ApiVersionReader = new HeaderApiVersionReader("api-version");
-
-            //});
+            services.AddReposotories();          
+           
 
             services.AddHttpContextAccessor();
             services.AddLabtestAuthotization(Configuration);
+            
         }
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -115,12 +109,12 @@ namespace LabTest.Api
             //{
             //    var user = new ApplicationUser
             //    {
-            //        Email = "admin@hateemtai.com",
-            //        UserName = "admin@hateemtai.com",
-            //        PhoneNumber = "01712443308",
+            //        Email = "rezaul0920@gmail.com",
+            //        UserName = "rezaul0920@gmail.com",
+            //        PhoneNumber = "01731186596",
             //        SecurityStamp = Guid.NewGuid().ToString()
             //    };
-            //    userManager.CreateAsync(user, "@bC123dd");
+            //    userManager.CreateAsync(user, "@Lab12345");
             //}
 
 
